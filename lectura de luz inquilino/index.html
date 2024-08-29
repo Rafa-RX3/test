@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="recurso.css">
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <title>App Luz</title>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">App Luz</a>
+        </div>
+      </nav>
+
+   <div class="container">
+    <div class="row pt-5" >
+        <div class="col-md-5">
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="costoKwhInput" onkeyup="saltar(event,'lecturaActualInput')" placeholder="">
+                <label for="costoKwhInput">Costo de kWh</label>
+            </div>
+
+            <div class="row g-2 mb-2">
+                
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="number" class="form-control" id="lecturaActualInput" onkeyup="saltar(event,'lecturaAnteriorInput')" placeholder="">
+                    <label for="lecturaActualInput">Lectura Actual</label>
+                  </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="form-floating">
+                      <input type="number" class="form-control" id="lecturaAnteriorInput" onkeyup="saltar(event,'energiaExtraInput')" placeholder="">
+                      <label for="lecturaAnteriorInput">Lectura Anterior</label>
+                    </div>
+                  </div>
+
+            </div>
+
+            <div class="row g-2 mb-2">
+                
+
+                <div class="col-md">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="energiaExtraInput" onkeyup="saltar(event,'alumPublicInput')" placeholder="" disabled>
+                        <label for="energiaExtraInput">Energia Extra</label>
+                    </div>
+                </div>
+
+
+                
+
+                <div class="col-md">
+
+
+                    <input type="checkbox" class="btn-check position-absolute top-50 start-50 translate-middle" id="checkEnergiaExtra" onclick="comprueba(this); desactivar('energiaExtraInput','checkEnergiaExtra');"  autocomplete="off">                    
+                    <label class="btn btn-outline-primary" for="checkEnergiaExtra">con Energia Extra</label>
+                    <!-- <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btn-check-outlined">Single toggle</label> -->
+                   
+                        <!-- <div class="form-floating">
+                        <input type="number" class="form-control" id="energiaInput" placeholder="" disabled>
+                        <label for="energiaInput">Energia</label> -->
+                    
+                </div>
+            </div>
+
+            <!-- --- -->
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="alumPublicInput" onkeyup="saltar(event,'cargoFijoInput')" placeholder="">
+                <label for="alumPublicInput">Alumbrado Publico</label>
+            </div>
+
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="cargoFijoInput" onkeyup="saltar(event,'interesCompensatorioInput')" placeholder="">
+                <label for="cargoFijoInput">Cargo Fijo</label>
+            </div>
+              
+
+            
+            
+
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="interesCompensatorioInput" onkeyup="saltar(event,'mantReposInput')" placeholder="">
+                <label for="interesCompesatorioInput">Intereses Compensatorios</label>
+            </div>
+
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="mantReposInput" onkeyup="saltar(event,'igvInput')" placeholder="">
+                <label for="mantReposInput">Mantenimiento y Reposicion</label>
+            </div>
+
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="igvInput" onkeyup="saltar(event,'otrosConceptosInput')" placeholder="">
+                <label for="igvInput">I.G.V</label>
+            </div>
+
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="otrosConceptosInput" onkeyup="saltar(event,'aguaPagoInput')" placeholder="">
+                <label for="otrosConceptosInput">Otros Conceptos</label>
+            </div>
+
+            <!-- division -->
+
+           
+
+            <div class="form-floating mb-2">
+                <input type="number" class="form-control" id="aguaPagoInput" onkeyup="saltar(event,'btnCalcular')" placeholder="">
+                <label for="aguaPagoInput">Recibo de Agua Pago</label>
+            </div>
+
+            <div class="d-grid mb-2">
+                <button type="button" class="btn btn-primary btn-lg" class="calcularButton" id="btnCalcular">Calcular</button>
+            </div>
+        </div>
+
+
+        <!-- group list output -->
+        <div class="col-md-7">
+            <ul class="list-group">
+                <li class="list-group-item active d-flex justify-content-between align-items-center" id="dateOutput">
+                    Resumen de Pago de Luz y Agua
+                    <span class="" id="fechaOutput">-/-/-</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    Consumo Facturado
+                    <span class="" id="consumoFacturadoOutput" >---</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Alumbrado Publico
+                    <span class="" id="alumPublicOutput">---</span>
+                </li>
+                
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    Cargo Fijo
+                    <span class="" id="cargoFijoOutput">---</span>
+                </li>
+               
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    Energia
+                    <span class="" id="energiaOutput">---</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    Intereses Compensatorios
+                    <span class="" id="interesCompensatorioOutput">---</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    Mantenimiento y Reposicion
+                    <span class="" id="mantReposOutput">---</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    I.G.V.
+                    <span class="" id="igvOutput">---</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    Otros Conceptos
+                    <span class="" id="otrosConceptosOutput">---</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-body-secondary" >
+                    
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    Total Recibo de Luz Pago
+                    <span class="" id="totalLuzOutput">---</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    Recibo de Agua Pago
+                    <span class="" id="aguaPagoOutput">---</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-body-secondary" >
+                    Total Luz y Agua
+                    <span class="" id="totalOutput">---</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
